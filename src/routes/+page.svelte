@@ -16,10 +16,16 @@
 		if (event.key !== 'Enter') return;
 
 		const input = event.target as HTMLInputElement;
-    const text = input.value;
-    const done = false;
+		const text = input.value;
+		const done = false;
 
-    todos = [...todos, { text, done }];
+		todos = [...todos, { text, done }];
+	}
+
+	function editTodoText(event: Event) {
+		const input = event.target as HTMLInputElement;
+		const index = Number(input.dataset.index);
+		todos[index].text = input.value;
 	}
 </script>
 
@@ -30,7 +36,7 @@
 		<div class="todos">
 			{#each todos as todo, i}
 				<div class="todo">
-					<input type="text" value={todo.text} />
+					<input type="text" value={todo.text} oninput={editTodoText} data-index={i} />
 					<input type="checkbox" checked={todo.done} />
 				</div>
 			{/each}
