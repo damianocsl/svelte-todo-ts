@@ -8,18 +8,13 @@
 
 	type Filter = 'all' | 'active' | 'completed';
 
-	let todos = $state<Todo[]>([
-		{ text: 'Learn Svelte', done: false },
-		{ text: 'Learn German', done: true }
-	]);
-
+	let todos = $state<Todo[]>();
 	let filter = $state<Filter>('all');
   let filteredTodos = $derived(filterTodos());
 
   $effect(() => {
-    console.log('todos', todos)
-    console.log('filter', filter)
-    console.log('filteredTodos', filteredTodos)
+    const savedTodos = localStorage.getItem('todos')
+    if (savedTodos) todos = JSON.parse(savedTodos);
   });
 
 	function addTodo(event: KeyboardEvent) {
@@ -43,10 +38,6 @@
 		const index = Number(input.dataset.index);
 		todos[index].done = input.checked;
 	}
-
-  function setFilter(newFilter: Filter) {
-    filter = newFilter;
-  }
 
   function filterTodos() {
     switch (filter) {
