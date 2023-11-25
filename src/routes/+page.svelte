@@ -15,9 +15,11 @@
 	function addTodo(event: KeyboardEvent) {
 		if (event.key !== 'Enter') return;
 
-		const todoEl = event.target as HTMLInputElement;
+		const input = event.target as HTMLInputElement;
+    const text = input.value;
+    const done = false;
 
-    // TODO: implement
+    todos = [...todos, { text, done }];
 	}
 </script>
 
