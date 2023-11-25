@@ -12,6 +12,10 @@
 		}
 	]);
 
+	// $effect(() => {
+	// 	console.log('todos', todos);
+	// });
+
 	function addTodo(event: KeyboardEvent) {
 		if (event.key !== 'Enter') return;
 
@@ -27,6 +31,12 @@
 		const index = Number(input.dataset.index);
 		todos[index].text = input.value;
 	}
+
+  function editTodoDone(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const index = Number(input.dataset.index);
+    todos[index].done = input.checked;
+  }
 </script>
 
 <div class="page">
@@ -37,7 +47,7 @@
 			{#each todos as todo, i}
 				<div class="todo">
 					<input type="text" value={todo.text} oninput={editTodoText} data-index={i} />
-					<input type="checkbox" checked={todo.done} />
+					<input type="checkbox" checked={todo.done} onchange={editTodoDone} data-index={i} />
 				</div>
 			{/each}
 		</div>
