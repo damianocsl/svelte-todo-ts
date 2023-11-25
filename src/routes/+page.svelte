@@ -59,7 +59,9 @@
     }
   }
 
-  
+  function remaining() {
+    return todos.filter(todo => !todo.done).length;
+  }
 </script>
 
 <div class="page">
