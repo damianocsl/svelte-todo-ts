@@ -1,20 +1,20 @@
 <script lang="ts">
 	import 'ress';
 
-	let todos = $state([
-		{
-			text: 'Learn Svelte',
-			done: false
-		},
-		{
-			text: 'Learn German',
-			done: true
-		}
+	type Todo = {
+		text: string;
+		done: boolean;
+	};
+
+	type Filter = 'all' | 'active' | 'completed';
+
+	let todos = $state<Todo[]>([
+		{ text: 'Learn Svelte', done: false },
+		{ text: 'Learn German', done: true }
 	]);
 
-	// $effect(() => {
-	// 	console.log('todos', todos);
-	// });
+	let filter = $state<Filter>('all');
+  let filteredTodos = $derived(filterTodos());
 
 	function addTodo(event: KeyboardEvent) {
 		if (event.key !== 'Enter') return;
@@ -32,10 +32,21 @@
 		todos[index].text = input.value;
 	}
 
-  function editTodoDone(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const index = Number(input.dataset.index);
-    todos[index].done = input.checked;
+	function editTodoDone(event: Event) {
+		const input = event.target as HTMLInputElement;
+		const index = Number(input.dataset.index);
+		todos[index].done = input.checked;
+	}
+
+  function filterTodos() {
+    switch (filter) {
+      case 'active':
+        return todos.filter(todo => !todo.done);
+      case 'completed':
+        return todos.filter(todo => todo.done);
+      default:
+        return todos;
+    }
   }
 </script>
 
@@ -51,10 +62,18 @@
 				</div>
 			{/each}
 		</div>
+
+		<div class="filters">
+			{#each ['all', 'active', 'completed'] as f}
+				<button class:active={filter === f} onclick={() => (filter = f as Filter)}>
+					{f}
+				</button>
+			{/each}
+		</div>
 	</div>
 </div>
 
-<style>
+<style lang="scss">
 	.page {
 		background-color: #fafafa;
 		height: 100vh;
@@ -78,6 +97,7 @@
 		display: grid;
 		gap: 1rem;
 		margin-block-start: 1rem;
+		margin-block-end: 1rem;
 	}
 
 	.todo {
@@ -97,5 +117,19 @@
 		right: 4%;
 		top: 50%;
 		translate: 0 -50%;
+	}
+
+	button {
+		border: 1px solid #ddd;
+		border-radius: 0.5rem;
+		padding: 0.5rem 1rem;
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+
+    &.active {
+      background-color: #ddd;
+    }
 	}
 </style>
