@@ -82,6 +82,10 @@
       <button onclick={() => setFilter('active')}>Active</button>
       <button onclick={() => setFilter('completed')}>Completed</button>
 		</div>
+
+    <div class="remaining">
+      {remaining()} items left
+    </div>
 	</div>
 </div>
 
@@ -124,7 +128,7 @@
     opacity: 0.5;
   }
 
-  .filters {
+  .filters, .remaining {
 		margin-block-start: 1rem;
   }
 
