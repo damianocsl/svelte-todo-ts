@@ -8,13 +8,21 @@
 
 	type Filter = 'all' | 'active' | 'completed';
 
-	let todos = $state<Todo[]>();
+	let todos = $state<Todo[]>([]);
 	let filter = $state<Filter>('all');
   let filteredTodos = $derived(filterTodos());
 
   $effect(() => {
     const savedTodos = localStorage.getItem('todos')
     if (savedTodos) todos = JSON.parse(savedTodos);
+  });
+
+  $effect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  });
+
+  $effect(() => {
+    console.log('todos',  localStorage.getItem('todos'));
   });
 
 	function addTodo(event: KeyboardEvent) {
@@ -53,6 +61,10 @@
   function remaining() {
     return todos.filter(todo => !todo.done).length;
   }
+
+  function deleteTodo(index) {
+    todos = todos.filter((todo, i) => i !== index);
+  }
 </script>
 
 <div class="page">
@@ -60,10 +72,11 @@
 		<input type="text" placeholder="Add a todo" onkeydown={addTodo} />
 
 		<div class="todos">
-			{#each filteredTodos as todo, i}
+			{#each filteredTodos as todo, idx}
 				<div class="todo" class:completed={todo.done}>
 					<input type="text" value={todo.text} oninput={editTodoText} data-index={i} />
 					<input type="checkbox" checked={todo.done} onchange={editTodoDone} data-index={i} />
+          <button onclick={() => deleteTodo(index)}>Delete</button>
 				</div>
 			{/each}
 		</div>
