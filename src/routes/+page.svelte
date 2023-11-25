@@ -58,6 +58,8 @@
         return todos;
     }
   }
+
+  
 </script>
 
 <div class="page">
@@ -66,7 +68,7 @@
 
 		<div class="todos">
 			{#each filteredTodos as todo, i}
-				<div class="todo">
+				<div class="todo" class:completed={todo.done}>
 					<input type="text" value={todo.text} oninput={editTodoText} data-index={i} />
 					<input type="checkbox" checked={todo.done} onchange={editTodoDone} data-index={i} />
 				</div>
@@ -106,19 +108,31 @@
 		display: grid;
 		gap: 1rem;
 		margin-block-start: 1rem;
-		margin-block-end: 1rem;
 	}
 
 	.todo {
 		position: relative;
-		background-color: #eee;
+		background-color: #ddd;
 		border-radius: 0.5rem;
-		border: 1px solid #ddd;
+		border: 1px solid #ccc;
+    transition: opacity 200ms;
 	}
+
+  .completed {
+    opacity: 0.5;
+  }
+
+  .filters {
+		margin-block-start: 1rem;
+  }
 
 	input[type='text'] {
 		width: 100%;
 		padding: 1rem;
+
+    &:focus {
+      outline: none;
+    }
 	}
 
 	input[type='checkbox'] {
