@@ -16,6 +16,12 @@
 	let filter = $state<Filter>('all');
   let filteredTodos = $derived(filterTodos());
 
+  $effect(() => {
+    console.log('todos', todos)
+    console.log('filter', filter)
+    console.log('filteredTodos', filteredTodos)
+  });
+
 	function addTodo(event: KeyboardEvent) {
 		if (event.key !== 'Enter') return;
 
@@ -38,8 +44,8 @@
 		todos[index].done = input.checked;
 	}
 
-  function setFilter(filter: Filter) {
-    filter = filter;
+  function setFilter(newFilter: Filter) {
+    filter = newFilter;
   }
 
   function filterTodos() {
