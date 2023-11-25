@@ -72,11 +72,11 @@
 		<input type="text" placeholder="Add a todo" onkeydown={addTodo} />
 
 		<div class="todos">
-			{#each filteredTodos as todo, idx}
+			{#each filteredTodos as todo, index}
 				<div class="todo" class:completed={todo.done}>
-					<input type="text" value={todo.text} oninput={editTodoText} data-index={i} />
-					<input type="checkbox" checked={todo.done} onchange={editTodoDone} data-index={i} />
-          <button onclick={() => deleteTodo(index)}>Delete</button>
+					<input type="text" value={todo.text} oninput={editTodoText} data-index={index} />
+					<input type="checkbox" checked={todo.done} onchange={editTodoDone} data-index={index} />
+          <button class="delete" onclick={() => deleteTodo(index)}>x</button>
 				</div>
 			{/each}
 		</div>
@@ -151,6 +151,14 @@
 		top: 50%;
 		translate: 0 -50%;
 	}
+
+  .delete {
+    position: absolute;
+		right: 12%;
+		top: 50%;
+		translate: 0 -50%;
+    padding: 0;
+  }
 
 	button {
 		border: 1px solid #ddd;
