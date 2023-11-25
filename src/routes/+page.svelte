@@ -38,6 +38,10 @@
 		todos[index].done = input.checked;
 	}
 
+  function setFilter(filter: Filter) {
+    filter = filter;
+  }
+
   function filterTodos() {
     switch (filter) {
       case 'active':
@@ -55,7 +59,7 @@
 		<input type="text" placeholder="Add a todo" onkeydown={addTodo} />
 
 		<div class="todos">
-			{#each todos as todo, i}
+			{#each filteredTodos as todo, i}
 				<div class="todo">
 					<input type="text" value={todo.text} oninput={editTodoText} data-index={i} />
 					<input type="checkbox" checked={todo.done} onchange={editTodoDone} data-index={i} />
@@ -64,11 +68,9 @@
 		</div>
 
 		<div class="filters">
-			{#each ['all', 'active', 'completed'] as f}
-				<button class:active={filter === f} onclick={() => (filter = f as Filter)}>
-					{f}
-				</button>
-			{/each}
+      <button onclick={() => setFilter('all')}>All</button>
+      <button onclick={() => setFilter('active')}>Active</button>
+      <button onclick={() => setFilter('completed')}>Completed</button>
 		</div>
 	</div>
 </div>
