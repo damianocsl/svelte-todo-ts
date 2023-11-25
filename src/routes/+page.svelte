@@ -82,9 +82,9 @@
 		</div>
 
 		<div class="filters">
-      <button onclick={() => filter = 'all'}>All</button>
-      <button onclick={() => filter = 'active'}>Active</button>
-      <button onclick={() => filter = 'completed'}>Completed</button>
+      <button onclick={() => filter = 'all'} class:active={filter === 'all'}>All</button>
+      <button onclick={() => filter = 'active'} class:active={filter === 'active'}>Active</button>
+      <button onclick={() => filter = 'completed'} class:active={filter === 'completed'}>Completed</button>
 		</div>
 
     <div class="remaining">
@@ -152,14 +152,6 @@
 		translate: 0 -50%;
 	}
 
-  .delete {
-    position: absolute;
-		right: 12%;
-		top: 50%;
-		translate: 0 -50%;
-    padding: 0;
-  }
-
 	button {
 		border: 1px solid #ddd;
 		border-radius: 0.5rem;
@@ -171,6 +163,15 @@
 
     &.active {
       background-color: #ddd;
+      border-color: #ccc;
+    }
+
+    &.delete {
+      position: absolute;
+      right: 12%;
+      top: 50%;
+      translate: 0 -50%;
+      padding: 0;
     }
 	}
 </style>
