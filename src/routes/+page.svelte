@@ -78,9 +78,9 @@
 		</div>
 
 		<div class="filters">
-      <button onclick={() => setFilter('all')}>All</button>
-      <button onclick={() => setFilter('active')}>Active</button>
-      <button onclick={() => setFilter('completed')}>Completed</button>
+      <button onclick={() => filter = 'all'}>All</button>
+      <button onclick={() => filter = 'active'}>Active</button>
+      <button onclick={() => filter = 'completed'}>Completed</button>
 		</div>
 
     <div class="remaining">
